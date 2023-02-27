@@ -34,6 +34,9 @@ function init() {
       .then((data) => {
         if (data == "View all departments") {
           db.query('SELECT * FROM department', function (err, results) {
+            if (err) {
+              console.log(err);
+            }
             console.table(results);
           });
         }  
