@@ -102,8 +102,13 @@ function addDepartment() {
       });
     });
 };
-      
+
 function addRole () {
+  db.query('SELECT * FROM department', function (err, results) {
+    let depts = results.map((dept) => ({
+      name: dept.name,
+      value: dept.id
+    })
     inquirer
       .prompt([
         {
@@ -117,16 +122,17 @@ function addRole () {
           message: 'Enter the salary of role:',
         },
         {
-          type: 'input',
+          type: 'list',
           name: 'Department',
-          message: 'Enter the department for the role:',
+          choices: depts,
+          message: 'Select the department for the role:'
         }
       ])
       .then((data) => {
         db.query('INSERT INTO role SET ?',{ 
           Title: data.Title,
           Salary: data.Salary,
-          Department_id: data
+          Department_id: data.Department
         }, function (err, results) {
           if (err) {
           console.log(err);
@@ -134,17 +140,9 @@ function addRole () {
           console.log("You added: " + data.Title, data.Salary, data.Department + " to the database.");
         init();
       });
-      //   db.query('INSERT INTO department SET ?',{ 
-      //     Name: data.Department
-      //   }, function (err, results) {
-      //     if (err) {
-      //     console.log(err);
-      //     }
-      //   console.log("You added: " + data.Title, data.Salary, data.Department + " to the database.");
-      //   init();
-      // });
     });
 };
+
 // WHEN I choose to add a role
 // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
 // WHEN I choose to add an employee
