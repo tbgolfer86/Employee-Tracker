@@ -2,17 +2,39 @@ const consoleTable = require('console.table');
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 
-// Connect to database
 const db = mysql.createConnection(
     {
       host: 'localhost',
-      // MySQL username,
       user: 'root',
-      // MySQL password
       password: 'password',
       database: 'employee_db'
     },
     console.log(`Connected to the employee_db database.`)
   );
 
-  view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
+const questions = [{
+    type: 'list',
+    name: 'Task',
+    message: 'What would you like to do?',
+    choices: [
+        "View all departments",
+        "View all roles",
+        "View all employees",
+        "Add a department",
+        "Add a role",
+        "Add an employee",
+        "Update an employee role",
+        "Nothing",
+    ]
+}];
+
+function init() {
+    inquirer
+      .prompt(questions)
+      .then((data) => {
+        console.log(data);
+    });
+}
+
+init();
+
