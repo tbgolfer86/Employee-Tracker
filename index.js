@@ -32,7 +32,11 @@ function init() {
     inquirer
       .prompt(questions)
       .then((data) => {
-        console.log(data);
+        if (data == "View all departments") {
+          db.query('SELECT * FROM department', function (err, results) {
+            console.table(results);
+          });
+        }  
     });
 }
 
