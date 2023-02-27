@@ -108,7 +108,7 @@ function addRole () {
     let depts = results.map((dept) => ({
       name: dept.name,
       value: dept.id
-    })
+    }))
     inquirer
       .prompt([
         {
@@ -141,6 +141,7 @@ function addRole () {
         init();
       });
     });
+  });
 };
 
 // WHEN I choose to add a role
