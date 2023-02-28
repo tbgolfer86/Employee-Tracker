@@ -54,7 +54,7 @@ function init() {
           });
         };
         if (data.Task == "View all employees") {
-          db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, role.department_id, department.name, role.salary, employee.manager_id FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id', function (err, results) {
+          db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, role.department_id, department.name, role.salary, employee.manager_id, CONCAT(manager.first_name, " ", manager.last_name) AS manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id', function (err, results) {
             if (err) {
               console.log(err);
             }
@@ -191,6 +191,45 @@ function addEmployee () {
           console.log(err);
           }
           console.log("You added: " + data.FirstName, data.LastName, data.Role, data.Manager + " to the database.");
+        init();
+      });
+      });
+    });
+  });
+};
+
+function updateRole () {
+  db.query('SELECT * FROM employee', function (err, results) {
+    let employees = results.map((employee) => ({
+      name: employee.first_name + ' ' + employee.last_name,
+      value: employee.id
+    }))
+    db.query('SELECT * FROM role', function (err, results) {
+      let roles = results.map((role) => ({
+        name: role.title,
+        value: role.id
+      }))
+      inquirer
+        .prompt([
+        {
+          type: 'list',
+          name: 'Employee',
+          choices: employees,
+          message: 'Select an employee to update:',
+        },
+        {
+          type: 'list',
+          name: 'Role',
+          choices: roles,
+          message: 'Select the new role:',
+        },
+        ])
+        .then((data) => {
+        db.query('UPDATE employee SET role_id = data.Role WHERE id = role_id', function (err, results) {
+          if (err) {
+          console.log(err);
+          }
+          console.log("You updated: " + data.Employee + " to:" + data.Role);
         init();
       });
       });
