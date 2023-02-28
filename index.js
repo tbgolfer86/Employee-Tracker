@@ -225,11 +225,14 @@ function updateRole () {
         },
         ])
         .then((data) => {
-        db.query('UPDATE employee SET role_id = data.Role WHERE id = role_id', function (err, results) {
+        db.query('UPDATE employee SET role_id = id WHERE ?',{ 
+          id: data.Employee,
+          role_id: data.Role,
+        }, function (err, results) {
           if (err) {
           console.log(err);
           }
-          console.log("You updated: " + data.Employee + " to:" + data.Role);
+          console.log("You updated: " + data.Employee + " to" + data.Role);
         init();
       });
       });
