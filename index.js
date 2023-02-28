@@ -12,6 +12,18 @@ const db = mysql.createConnection(
     console.log(`Connected to the employee_db database.`)
   );
 
+console.log('');
+console.log(' ________________________________________________ ');
+console.log('|                                                |');
+console.log('|                                                |');
+console.log('|                                                |');
+console.log('|   |||||||||||| EMPLOYEE TRACKER ||||||||||||   |');
+console.log('|                                                |');
+console.log('|                                                |');
+console.log('|                                                |');
+console.log('|________________________________________________|');
+console.log('');
+
 const questions = [{
     type: 'list',
     name: 'Task',
@@ -225,24 +237,20 @@ function updateRole () {
         },
         ])
         .then((data) => {
-        db.query('UPDATE employee SET role_id = id WHERE ?',{ 
-          id: data.Employee,
-          role_id: data.Role,
-        }, function (err, results) {
+        db.query('UPDATE employee SET role_id = ? WHERE id = ?',[
+          data.Role,
+          data.Employee,
+        ], function (err, results) {
           if (err) {
           console.log(err);
           }
-          console.log("You updated: " + data.Employee + " to" + data.Role);
+          console.log("You updated: " + data.Employee + " to " + data.Role);
         init();
       });
       });
     });
   });
 };
-
-
-// WHEN I choose to update an employee role
-// THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 
 init();
 
