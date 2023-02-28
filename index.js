@@ -44,7 +44,7 @@ function init() {
           });
         };
         if (data.Task == "View all roles") {
-          db.query('SELECT * FROM role', function (err, results) {
+          db.query('SELECT role.id, role.title, role.salary, role.department_id, department.name FROM role INNER JOIN department ON role.department_id = department.id ORDER BY role.id ASC;', function (err, results) {
             if (err) {
               console.log(err);
             }
@@ -54,7 +54,7 @@ function init() {
           });
         };
         if (data.Task == "View all employees") {
-          db.query('SELECT * FROM employee', function (err, results) {
+          db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, role.department_id, role.salary, employee.manager_id FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id', function (err, results) {
             if (err) {
               console.log(err);
             }
@@ -144,9 +144,61 @@ function addRole () {
   });
 };
 
+function addEmployee () {
+  db.query('SELECT * FROM role', function (err, results) {
+    let roles = results.map((role) => ({
+      name: role.title,
+      value: role.id
+    }))
+    db.query('SELECT * FROM employee', function (err, results) {
+      let managers = results.map((employee) => ({
+        name: employee.first_name + ' ' + employee.last_name,
+        value: employee.id
+      }))
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'FirstName',
+          message: 'Enter first name:',
+        },
+        {
+          type: 'input',
+          name: 'LastName',
+          message: 'Enter last name:',
+        },
+        {
+          type: 'list',
+          name: 'Role',
+          choices: roles,
+          message: 'Select the employees role:',
+        },
+        {
+          type: 'list',
+          name: 'Manager',
+          choices: managers,
+          message: 'Select the employees manager:',
+        },
+      ])
+      .then((data) => {
+        db.query('INSERT INTO employee SET ?',{ 
+          First_Name: data.FirstName,
+          Last_Name: data.LastName,
+          Role_id: data.Role,
+          Manager_id: data.Manager,
+        }, function (err, results) {
+          if (err) {
+          console.log(err);
+          }
+          console.log("You added: " + data.FirstName, data.LastName, data.Role, data.Manager + " to the database.");
+        init();
+      });
+    });
+  });
+});
+};
 
-// WHEN I choose to add an employee
-// THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
+
 // WHEN I choose to update an employee role
 // THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 
