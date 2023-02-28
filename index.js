@@ -54,7 +54,7 @@ function init() {
           });
         };
         if (data.Task == "View all employees") {
-          db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, role.department_id, role.salary, employee.manager_id FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id', function (err, results) {
+          db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, role.department_id, department.name, role.salary, employee.manager_id FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id', function (err, results) {
             if (err) {
               console.log(err);
             }
