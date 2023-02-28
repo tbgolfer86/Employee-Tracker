@@ -50,7 +50,9 @@ function init() {
             if (err) {
               console.log(err);
             }
+            console.log('');
             console.log("Viewing all departments:");
+            console.log('');
             console.table(results);
             init();
           });
@@ -60,7 +62,9 @@ function init() {
             if (err) {
               console.log(err);
             }
+            console.log('');
             console.log("Viewing all roles:");
+            console.log('');
             console.table(results);
             init();
           });
@@ -70,7 +74,9 @@ function init() {
             if (err) {
               console.log(err);
             }
+            console.log('');
             console.log("Viewing all employees:");
+            console.log('');
             console.table(results);
             init();
           });
@@ -109,7 +115,9 @@ function addDepartment() {
           if (err) {
           console.log(err);
           }
-        console.log("You added: " + data.Department + " to the database.");
+        console.log('');
+        console.log('Successfully added department to the database.');
+        console.log('');
         init();
       });
     });
@@ -149,7 +157,9 @@ function addRole () {
           if (err) {
           console.log(err);
           }
-          console.log("You added: " + data.Title, data.Salary, data.Department + " to the database.");
+          console.log('');
+          console.log('Successfully added role to the database.');
+          console.log('');
         init();
       });
     });
@@ -202,7 +212,9 @@ function addEmployee () {
           if (err) {
           console.log(err);
           }
-          console.log("You added: " + data.FirstName, data.LastName, data.Role, data.Manager + " to the database.");
+          console.log('');
+          console.log('Successfully added employee to the database.');
+          console.log('');
         init();
       });
       });
@@ -244,7 +256,9 @@ function updateRole () {
           if (err) {
           console.log(err);
           }
-          console.log("You updated: " + data.Employee + " to " + data.Role);
+          console.log('');
+          console.log('Successfully updated role.');
+          console.log('');
         init();
       });
       });
