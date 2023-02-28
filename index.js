@@ -155,8 +155,8 @@ function addEmployee () {
         name: employee.first_name + ' ' + employee.last_name,
         value: employee.id
       }))
-    inquirer
-      .prompt([
+      inquirer
+        .prompt([
         {
           type: 'input',
           name: 'FirstName',
@@ -179,8 +179,8 @@ function addEmployee () {
           choices: managers,
           message: 'Select the employees manager:',
         },
-      ])
-      .then((data) => {
+        ])
+        .then((data) => {
         db.query('INSERT INTO employee SET ?',{ 
           First_Name: data.FirstName,
           Last_Name: data.LastName,
@@ -193,9 +193,9 @@ function addEmployee () {
           console.log("You added: " + data.FirstName, data.LastName, data.Role, data.Manager + " to the database.");
         init();
       });
+      });
     });
   });
-});
 };
 
 
