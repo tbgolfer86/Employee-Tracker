@@ -26,7 +26,7 @@
 
   ## Usage
   This is a command-line application that is invoked by using the command: node index.js<br><br>
-  [Walkthrough video that demonstrates its functionality]()<br><br>
+  [Walkthrough video that demonstrates its functionality](https://drive.google.com/file/d/1ctNj8zYaziQXk9Llkf-j5yJoBdchHTcI/view?usp=sharing)<br><br>
   This screenshot shows it running in the terminal:<br>
   ![alt text](./assets/images/Screenshot%202023-02-28%20at%207.36.35%20PM.png)
 
